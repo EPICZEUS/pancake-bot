@@ -6,11 +6,11 @@ const timeouts = new Discord.Collection();
 client.once('ready', () => {
     console.log("Ready!");
 
-    for (const [id, guild] of client.guilds) timeouts.set(id, setInterval(() => guild.defaultChannel.send("🥞").catch(() => null), 300000));
+    for (const [id, guild] of client.guilds) timeouts.set(id, setInterval(() => guild.channels.filter(a => a.me.permissions.has("SEND_MESSAGES")).first().send("🥞").catch(() => null), 300000));
 });
 
 client.on('guildCreate', guild => {
-   timeouts.set(guild.id, setInterval(() => guild.defaultChannel.send("🥞").catch(() => null), 300000)); 
+   timeouts.set(guild.id, setInterval(() => guild.channels.filter(a => a.me.permissions.has("SEND_MESSAGES")).first().send("🥞").catch(() => null), 300000)); 
 });
 
 client.on('guildDelete', guild => {
